@@ -35,3 +35,20 @@
 	    (iter (cdr exp) (+ 1 num) (- remaining 1))
 	    (iter (cdr exp) num (- remaining 1)))))
   (iter expression 0 (length expression)))
+
+;; 1.4
+
+(defun count-occurrences (exp1 exp2)
+  "Count occurrences of one expression inside another"
+  (defun iter (exp1 exp2 num remaining)
+    (if (eq remaining 0)
+	num
+	(if (eq exp1 (car exp2))
+	    (iter exp1 (cdr exp2) (+ 1 num) (- remaining 1))
+	    (iter exp1 (cdr exp2) num (- remaining 1)))))
+  (iter exp1 exp2 0 (length exp2)))
+
+;; 1.5
+(defun dot-product (a b)
+  "Dot product..."
+  (apply #'+ (mapcar #'* a b)))
