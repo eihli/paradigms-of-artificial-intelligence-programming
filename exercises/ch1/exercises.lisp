@@ -24,6 +24,13 @@
 	    (iter (* accum a) (- counter 1)))))
   (iter a b))
 
+;; Solution from book
+(defun power (x n)
+  "Power raises x to the nth power. N must be an integer >= 0. This executes in log n time, because of the check for even n."
+  (cond ((= n 0) 1)
+	((evenp n) (expt (power x (/ n 2)) 2))
+	(t (* x (power x (- n 1))))))
+
 ;; 1.3
 
 (defun count-atoms (expression)
@@ -36,6 +43,20 @@
 	    (iter (cdr exp) num (- remaining 1)))))
   (iter expression 0 (length expression)))
 
+;; Solution from book
+(defun count-atoms (exp)
+  "Return the total number of non-nil atoms in the expression."
+  (cond ((null exp) 0)
+	((atom exp) 1)
+	(t (+ (count-atoms (car exp))
+	      (count-atoms (cdr exp))))))
+(defun count-all-atoms (exp &optional (if-null 1))
+  "Return the total number of atoms in the expression counting nil as an atom only in non-tail positions"
+  (cond ((null exp) if-null)
+	((atom exp) 1)
+	(t (+ (count-all-atoms (car exp) 1)
+	      (count-all-atoms (cdr exp) 0)))))
+  
 ;; 1.4
 
 (defun count-occurrences (exp1 exp2)
